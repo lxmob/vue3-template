@@ -2,3 +2,5 @@ dist
 /build
 /public
 /config
+auto-imports.d.ts
+components.d.ts

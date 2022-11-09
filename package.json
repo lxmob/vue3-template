@@ -1,9 +1,17 @@
 {
-  "name": "vue3-admin",
-  "version": "1.0.0",
-  "description": "webpack5,vue3,element-plus",
+  "name": "mingv3jsx",
+  "version": "0.0.1",
+  "description": "v3jsx-template",
   "author": "lxm-2777343105@qq.com",
-  "license": "ISC",
+  "license": "MIT",
+  "private": false,
+  "keywords": [
+    "jsx",
+    "vue3",
+    "pinia",
+    "webpack5",
+    "element-plus"
+  ],
   "scripts": {
     "start": "npm run dev",
     "dev": "cross-env NODE_ENV=development webpack-dev-server -c build/webpack.dev.js",
@@ -13,6 +21,8 @@
   },
   "dependencies": {
     "element-plus": "^2.2.20",
+    "pinia": "^2.0.23",
+    "pinia-plugin-persistedstate": "^2.3.0",
     "vue": "^3.2.41",
     "vue-router": "^4.1.6"
   },

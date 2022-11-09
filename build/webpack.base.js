@@ -19,19 +19,21 @@ const resolve = dir => {
   return path.join(__dirname, '..', dir)
 }
 
+/* 基础配置 */
 module.exports = {
-  entry: resolve('src/index.js'),
+  entry: resolve('src/main.js'),
   output: {
     clean: true, // webpack5内置打包前清空dist文件
     path: config.build.assetsRoot,
     publicPath: isDev ? config.dev.assetsPublicPath : config.build.assetsPublicPath,
-    filename: 'static/js/[name].[chunkhash:8].js' // js文件比较适用chunkhash模式
+    filename: 'static/js/[name].[chunkhash:8].js', // js文件比较适用chunkhash模式
+    chunkFilename: 'static/js/[name].[chunkhash:8].js'
   },
   resolve: {
     alias: {
       '@': resolve('src')
     },
-    extensions: ['.js', '.jsx', '.vue', '.json'],
+    extensions: ['.js', '.jsx', '.vue'],
     // 查找第三方插件时只在本项目中node_modules查找
     modules: [resolve('node_modules')]
   },
@@ -51,7 +53,7 @@ module.exports = {
             loader: 'vue-loader',
             options: {
               compilerOptions: {
-                preserveWhitespace: false // 不想让元素和元素之间有空格
+                preserveWhitespace: false
               },
               babelParserPlugins: ['jsx', 'classProperties', 'decorators-legacy']
             }
@@ -60,12 +62,7 @@ module.exports = {
       },
       {
         test: /\.(s[ac]|c)ss$/i,
-        use: [
-          isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
-          'css-loader',
-          'postcss-loader',
-          'sass-loader'
-        ]
+        use: [isDev ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader']
       },
       // webpack5默认支持文件解析，不再使用file-loader,url-loader解析文件
       // https://webpack.js.org/guides/asset-modules/#root
@@ -74,7 +71,7 @@ module.exports = {
         type: 'asset',
         parser: {
           dataUrlCondition: {
-            maxSize: 10 * 1024 // 超出10kb转为base64格式
+            maxSize: 10 * 1024 // 小于10kb转为base64格式
           }
         },
         generator: {
@@ -117,10 +114,14 @@ module.exports = {
     }),
     new VueLoaderPlugin(),
     AutoImport({ resolvers: [ElementPlusResolver()] }),
-    Components({ resolvers: [ElementPlusResolver()] }),
+    Components({
+      exclude: [/[\\/]node_modules[\\/]/],
+      include: [/\.jsx$/, /\.vue$/, /\.vue\?vue/],
+      resolvers: [ElementPlusResolver()]
+    }),
     ElementPlus({ useSource: false })
   ],
-  // webpack5开启持久化缓存，来缓存生成模块和chunk，节省下一次打包速度
+  // webpack5持久化缓存节省下一次打包速度
   cache: {
     type: 'filesystem' // 使用文件缓存
   }

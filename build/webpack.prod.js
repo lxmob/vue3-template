@@ -34,7 +34,7 @@ module.exports = merge(baseConfig, {
       })
     ],
     splitChunks: {
-      // 分隔代码
+      // https://webpack.docschina.org/plugins/split-chunks-plugin/#splitchunkscachegroups
       cacheGroups: {
         styles: {
           name: 'styles',
@@ -44,23 +44,17 @@ module.exports = merge(baseConfig, {
           priority: 10
         },
         vendors: {
-          // 提取第三方依赖代码
           test: /[\\/]node_modules[\\/]/,
           name: 'chunk-vendors',
           chunks: 'all',
-          // 只要使用两次就提取出来
           minChunks: 2,
-          // 只提取初始化就能获取到的模块,不管异步的
           chunks: 'initial',
-          // 提取代码体积大于0就提取出来
           minSize: 0,
-          // 提取优先级为1
           priority: 1,
           enforce: true,
           reuseExistingChunk: true
         },
         commons: {
-          // 提取页面公共代码
           name: 'chunk-commons',
           chunks: 'all',
           minChunks: 2,
@@ -75,16 +69,16 @@ module.exports = merge(baseConfig, {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../public/index.html'),
-      inject: true, // 自动注入静态资源
+      // https://github.com/jantimon/html-webpack-plugin#minification
       minify: {
         removeComments: true,
         collapseWhitespace: true,
         removeAttributeQuotes: true
       },
-      // 决定了 script 标签的引用顺序。默认有四个选项，'none', 'auto', 'dependency', '{function}'
-      chunksSortMode: 'auto'
+      inject: true // 自动注入静态资源
     }),
     // 复制静态资源到指定目录
+    // https://webpack.js.org/plugins/copy-webpack-plugin/
     new CopyPlugin({
       patterns: [
         {
@@ -93,8 +87,7 @@ module.exports = merge(baseConfig, {
           globOptions: {
             ignore: ['.*']
           },
-          // 忽略index.html
-          filter: source => !source.includes('index.html')
+          filter: source => !source.includes('index.html') // 忽略index.html
         }
       ]
     }),
@@ -128,12 +121,8 @@ module.exports = merge(baseConfig, {
     })
   ],
   performance: {
-    hints: 'warning',
-    maxAssetSize: 100000,
-    maxEntrypointSize: 400000,
-    // 只对打包后js文件超出体积警告
-    assetFilter: function (assetFilename) {
-      return assetFilename.endsWith('.js')
-    }
+    hints: false,
+    maxAssetSize: 512000,
+    maxEntrypointSize: 512000
   }
 })
