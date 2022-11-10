@@ -1,6 +1,6 @@
 // .eslintrc.js
 module.exports = {
-  extends: ['alloy', 'alloy/vue'],
+  extends: ['alloy', 'alloy/vue', './.eslintrc-auto-import.json'],
   env: {
     // Your environments (which contains several predefined global variables)
     node: true,

@@ -1,22 +1,25 @@
-import { defineComponent } from 'vue'
-import { useAppStore } from '@/store'
+import { Transition, KeepAlive } from 'vue'
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 
 const App = defineComponent({
   name: 'App',
   setup() {
-    const appStore = useAppStore()
-
-    const hanldeClick = () => {
-      appStore.updateTitle('appStore')
-    }
-
     return () => (
-      <div>
-        <el-header>
-          <el-button type="primary">按钮</el-button>
-          <span onClick={hanldeClick}>{appStore.title}</span>
-        </el-header>
-      </div>
+      <ElConfigProvider locale={zhCn}>
+        <RouterView
+          v-slots={{
+            default: ({ Component }) => {
+              return (
+                <>
+                  <Transition name="fade" mode="out-in">
+                    <KeepAlive>{Component ? <Component /> : null}</KeepAlive>
+                  </Transition>
+                </>
+              )
+            }
+          }}
+        ></RouterView>
+      </ElConfigProvider>
     )
   }
 })

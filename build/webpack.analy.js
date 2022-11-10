@@ -6,14 +6,15 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 // 通过smp分析构建打包速度
 const smp = new SpeedMeasurePlugin()
 
-module.exports = smp.wrap(
-  merge(prodConfig, {
-    plugins: [
-      // 配置分析打包结果插件
-      new BundleAnalyzerPlugin({
-        analyzerPort: 8089,
-        reportTitle: 'analyzer'
-      })
-    ]
-  })
-)
+const smpConfig = smp.wrap({
+  plugins: [
+    // 配置分析打包结果插件
+    new BundleAnalyzerPlugin({
+      analyzerPort: 8089,
+      reportTitle: 'analyzer'
+    })
+  ]
+})
+// Error "You forgot to add 'mini-css-extract-plugin' plugin"
+// https://github.com/stephencookdev/speed-measure-webpack-plugin/issues/167
+module.exports = merge(prodConfig, smpConfig)

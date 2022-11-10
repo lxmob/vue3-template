@@ -93,7 +93,8 @@ module.exports = merge(baseConfig, {
     }),
     // 抽离css
     new MiniCssExtractPlugin({
-      filename: 'static/css/[name].[contenthash:8].css'
+      filename: 'static/css/[name].[contenthash:8].css',
+      chunkFilename: 'static/css/[name].[contenthash:8].css'
     }),
     // 清理无用css
     new PurgeCSSPlugin({

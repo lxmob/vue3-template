@@ -113,10 +113,20 @@ module.exports = {
       __VUE_PROD_DEVTOOLS__: 'false'
     }),
     new VueLoaderPlugin(),
-    AutoImport({ resolvers: [ElementPlusResolver()] }),
+    AutoImport({
+      exclude: [/[\\/]node_modules[\\/]/],
+      include: [/\.[tj]sx?$/, /\.vue$/, /\.vue\?vue/],
+      resolvers: [ElementPlusResolver()],
+      imports: ['vue', 'vue-router', 'pinia'],
+      eslintrc: {
+        enabled: false, // 控制生成json文件来解决eslint报错问题
+        filepath: './.eslintrc-auto-import.json',
+        globalsPropValue: true
+      }
+    }),
     Components({
       exclude: [/[\\/]node_modules[\\/]/],
-      include: [/\.jsx$/, /\.vue$/, /\.vue\?vue/],
+      include: [/\.[tj]sx?$/, /\.vue$/, /\.vue\?vue/],
       resolvers: [ElementPlusResolver()]
     }),
     ElementPlus({ useSource: false })
