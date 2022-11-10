@@ -31,7 +31,11 @@ module.exports = {
   },
   resolve: {
     alias: {
-      '@': resolve('src')
+      '@': resolve('src'),
+      '~': resolve('src/pages'),
+      utils: resolve('src/utils'),
+      assets: resolve('src/assets'),
+      components: resolve('src/components')
     },
     extensions: ['.js', '.jsx', '.vue'],
     // 查找第三方插件时只在本项目中node_modules查找
