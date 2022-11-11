@@ -76,9 +76,7 @@ export const handleDownloadFile = response => {
           reject(jsonData)
         }
       } catch (err) {
-        // 解析成对象失败，说明是正常的文件流
         const blob = new Blob([response.data])
-        // 本地保存文件
         const url = window.URL.createObjectURL(blob)
         const link = document.createElement('a')
         link.href = url

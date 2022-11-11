@@ -39,12 +39,6 @@ client.interceptors.response.use(
   }
 )
 
-export async function request(url, config) {
-  const response = await client.request({ url, ...config })
-  const result = response.data
-  return [null, result]
-}
-
 export const get = (url, params = {}, clearFn) =>
   new Promise(resolve => {
     client
@@ -74,6 +68,12 @@ export const post = (url, data, params = {}) => {
         resolve([err, undefined])
       })
   })
+}
+
+export async function request(url, config) {
+  const response = await client.request({ url, ...config })
+  const result = response.data
+  return [null, result]
 }
 
 export default client

@@ -14,7 +14,7 @@ module.exports = {
     assetsSubDirectory: 'static', // 静态文件资源
     assetsPublicPath: '/',
 
-    // 跨域
+    // 代理配置
     proxyTable: {},
     // 服务器设置
     host: '127.0.0.1',

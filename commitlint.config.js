@@ -1,3 +1,4 @@
+// https://commitlint.js.org/#/reference-rules
 module.exports = {
   extends: ['@commitlint/config-conventional'],
   rules: {
@@ -19,4 +20,4 @@ module.exports = {
     ],
     'subject-case': [0] // subject 大小写不做校验
   }
-};
+}
