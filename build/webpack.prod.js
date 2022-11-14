@@ -107,7 +107,7 @@ module.exports = merge(baseConfig, {
               return validSection.match(/[A-Za-z0-9-_:/]+/g) || []
             }
           },
-          extensions: ['html', 'vue']
+          extensions: ['jsx', 'vue', 'html']
         }
       ],
       // 保留白名单
